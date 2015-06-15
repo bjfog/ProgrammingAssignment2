@@ -13,7 +13,7 @@
 #                     solving the inverse for the first time.
 #
 # Note that there is an assumption that the matrix used in 'makeCacheMatrix' is
-# invertable. However, this is not examined until the 'cacheSolve' function is
+# invertible. However, this is not examined until the 'cacheSolve' function is
 # actually invoked. 
 #-----------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## supressed by using the 'quiet = TRUE' option when the function is invoked.
 ##
 ## If the inverse of this matrix has not already been calculated, then the 'cacheSolve'
-## function will calculate it (or throw an error if it's not invertable), cache the
+## function will calculate it (or throw an error if it's not invertible), cache the
 ## inverse and return that inverse as the result.
 ##
 cacheSolve <- function(x, quiet = FALSE, ...) {
