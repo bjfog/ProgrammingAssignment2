@@ -1,8 +1,24 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
-
+#-----------------------------------------------------------------------------------
+# cachematrix.R
+#-----------------------------------------------------------------------------------
+# This file contains two functions:
+#
+#   makeCacheMatrix - this creates a new matrix object type that can cache the
+#                     inverse of the original matrix once it has been calculated.
+#                     If the inverse is available in the cache, then that is 
+#                     returned in preference to needing to recalculate the value.
+#
+#   cacheSolve      - this takes a matrix object of the type returned by makeCacheMatrix
+#                     and returns the inverse, either from a cached copy or by
+#                     solving the inverse for the first time.
+#
+# Note that there is an assumption that the matrix used in 'makeCacheMatrix' is
+# invertable. However, this is not examined until the 'cacheSolve' function is
+# actually invoked. 
+#-----------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
+##  makeCacheMatrix
+##
 ## This function creates an object that contains a matrix, may contain its inverse,
 ## and returns a list of functions that perform the following operations on that
 ## object:
@@ -11,6 +27,17 @@
 ##   3. set the value of the inverse of the matrix (if invertible, NA otherwise)
 ##   4. get the value of the inverse of the matrix (if invertible, from cache if there)
 makeCacheMatrix <- function(x = matrix()) {
+    ## We perform a sanity check here, to make sure that x is a matrix, and that it
+    ## is at least a square matrix:
+    if (!is.matrix(x)) {
+        message("WARNING: non-matrix argument")
+        return(NULL)
+    }
+    d <- dim(x)
+    if (d[1] != d[2]) {
+        message("WARNING: non-square-matrix argument")
+        return(NULL)
+    }
     ## We instantiate a null matrix here. This will hold the inverse if there is one:
     IM <- NULL
     ## The following function is used to set the matrix object to the matrix passed in:
@@ -28,9 +55,10 @@ makeCacheMatrix <- function(x = matrix()) {
     ## can be used to invoke them on this object:
     list(set = set, get = get, setInverse = setInverse, getInverse = getInverse)
 }
-
-
-## Write a short comment describing this function
+#-----------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
+##  cacheSolve
+##
 ## The following function takes an argument that must be the same type as that
 ## returned by the 'makeCacheMatrix' function above.
 ##
